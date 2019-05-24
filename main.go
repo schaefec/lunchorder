@@ -9,12 +9,14 @@ import (
 // PubSubMessage is the payload of a Pub/Sub event. Please refer to the docs for
 // additional information regarding Pub/Sub events.
 type PubSubMessage struct {
-	Data string `json:"name"`
+	ScrapeNow bool `json:"scrapenow"`
 }
 
 // HelloPubSub consumes a Pub/Sub message.
 func HelloPubSub(ctx context.Context, m PubSubMessage) error {
-	log.Println(string(m.Data) + ". It's me!... Again!!!")
+	if m.ScrapeNow {
+		log.Println("web scrape has been triggered")
+	}
 	return nil
 }
 
@@ -39,6 +41,6 @@ func (*mockContext) Value(v interface{}) interface{} {
 
 func main() {
 	HelloPubSub(&mockContext{}, PubSubMessage{
-		Data: "Test message",
+		ScrapeNow: true,
 	})
 }
