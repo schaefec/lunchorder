@@ -14,6 +14,6 @@ type PubSubMessage struct {
 
 // HelloPubSub consumes a Pub/Sub message.
 func HelloPubSub(ctx context.Context, m PubSubMessage) error {
-	log.Println(string(m.Data) + ". It's me!... Again!")
+	log.Println(string(m.Data) + ". It's me!... Again!!!")
 	return nil
 }
