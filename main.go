@@ -1,9 +1,9 @@
-// Package lunchorder contains a Pub/Sub Cloud Function.
-package lunchorder
+package main
 
 import (
 	"context"
 	"log"
+	"time"
 )
 
 // PubSubMessage is the payload of a Pub/Sub event. Please refer to the docs for
@@ -16,4 +16,29 @@ type PubSubMessage struct {
 func HelloPubSub(ctx context.Context, m PubSubMessage) error {
 	log.Println(string(m.Data) + ". It's me!... Again!!!")
 	return nil
+}
+
+type mockContext struct {
+}
+
+func (*mockContext) Deadline() (time.Time, bool) {
+	return time.Now(), false
+}
+
+func (*mockContext) Done() <-chan struct{} {
+	return make(chan struct{})
+}
+
+func (*mockContext) Err() error {
+	return nil
+}
+
+func (*mockContext) Value(v interface{}) interface{} {
+	return nil
+}
+
+func main() {
+	HelloPubSub(&mockContext{}, PubSubMessage{
+		Data: "Test message",
+	})
 }
