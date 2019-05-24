@@ -16,6 +16,8 @@ type PubSubMessage struct {
 func HelloPubSub(ctx context.Context, m PubSubMessage) error {
 	if m.ScrapeNow {
 		log.Println("web scrape has been triggered")
+	} else {
+		log.Println("Nothing to do for now.")
 	}
 	return nil
 }
